@@ -22,7 +22,11 @@ apt-get install -y --no-install-recommends \
   libmpfr-dev \
   libmpc-dev \
   python3-dev \
-  build-essential
+  build-essential \
+  libssl-dev \
+  libffi-dev \
+  rustc \
+  cargo
 rm -rf /var/lib/apt/lists/* /var/log/* /var/cache/*
 useradd --create-home --user-group dapp
 EOF
@@ -34,7 +38,7 @@ COPY ./requirements.txt .
 
 RUN <<EOF
 set -e
-pip install --upgrade pip
+pip install --upgrade pip setuptools wheel
 pip install -r requirements.txt --no-cache
 find /usr/local/lib -type d -name __pycache__ -exec rm -r {} +
 EOF

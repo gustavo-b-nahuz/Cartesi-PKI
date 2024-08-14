@@ -7,6 +7,10 @@ import json
 from Crypto.PublicKey import RSA
 from Crypto.Signature import pkcs1_15
 from Crypto.Hash import SHA256
+from cryptography.hazmat.primitives import hashes
+from cryptography.hazmat.primitives.asymmetric import padding
+from cryptography.hazmat.primitives.serialization import load_pem_public_key
+from cryptography.exceptions import InvalidSignature
 
 logging.basicConfig(level="INFO")
 logger = logging.getLogger(__name__)
@@ -26,13 +30,26 @@ def str2hex(str):
     """
     return "0x" + str.encode("utf-8").hex()
 
-def verificar_assinatura(certificado, assinatura, chave_publica):
-    chave_publica_rsa = RSA.import_key(chave_publica)
-    h = SHA256.new(certificado)
+def verify_signature(public_key_pem, message, signature):
     try:
-        pkcs1_15.new(chave_publica_rsa).verify(h, assinatura)
+        # Remover espaços em branco desnecessários e novas linhas
+        public_key_pem = public_key_pem.replace("\\n", "\n").encode()
+
+        # Carregar a chave pública do formato PEM
+        public_key = load_pem_public_key(public_key_pem)
+
+        # Verificar a assinatura
+        public_key.verify(
+            signature,
+            message.encode(),
+            padding.PKCS1v15(),
+            hashes.SHA256()
+        )
         return True
-    except (ValueError, TypeError):
+    except InvalidSignature:
+        return False
+    except ValueError as e:
+        print(f"Erro ao carregar a chave pública: {e}")
         return False
 
 def handle_advance(data):
@@ -47,17 +64,17 @@ def handle_advance(data):
 
         # Atribui cada valor a uma variável
         nome = dicionario["nome"]
-        certificado = dicionario["certificado"]
+        mensagem = dicionario["certificado"]
         assinatura = dicionario["assinatura"]
         publicKey = dicionario["publicKey"]
 
         # Exibe os valores das variáveis
         print("Nome:", nome)
-        print("Certificado:", certificado)
+        print("Mensagem:", mensagem)
         print("Assinatura:", assinatura)
         print("Chave Pública:", publicKey)
 
-        resultado = verificar_assinatura(certificado, assinatura, publicKey)
+        resultado = verify_signature(publicKey, mensagem, assinatura)
 
         if resultado:
             print("\nA assinatura foi verificada com sucesso. O certificado é válido.")
