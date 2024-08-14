@@ -20,36 +20,35 @@ Foi utilizado a implementação de sistemas Web3, mais especificamente a tecnolo
 ## Configuração do ambiente
 
 ### Instalar o Docker
-####Atualize os pacotes
+###Atualize os pacotes
 ```bash
 sudo apt-get update
 ```
-####Instale pacotes necessários
+###Instale pacotes necessários
 ```bash
 sudo apt-get install apt-transport-https ca-certificates curl software-properties-common
 ```
-####Adicione a chave GPG do Docker
+###Adicione a chave GPG do Docker
 ```bash
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
 ```
-####Adicione o repositório do Docker
+###Adicione o repositório do Docker
 ```bash
 sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
 ```
-####Atualize novamente os pacotes
+###Atualize novamente os pacotes
 ```bash
 sudo apt-get update
 ```
-####Instale o Docker
+###Instale o Docker
 ```bash
 sudo apt-get install docker-ce
 ```
-####Verifique a instalação
+###Verifique a instalação
 ```bash
 docker --version
 ```
-
-#### Instalar o Cartesi
+### Instalar o Cartesi
 ```bash
 npm install -g @cartesi/cli
 ```
