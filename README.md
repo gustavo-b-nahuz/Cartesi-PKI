@@ -65,12 +65,12 @@ nvm install 22
 
 ### Clone o repositório
 ```bash
-git clone https://github.com/seu-usuario/nome-do-repositorio.git
+git clone https://github.com/gustavo-b-nahuz/Cartesi-PKI.git
 ```
 
 ### Navegue até o diretório do projeto
 ```bash
-cd nome-do-repositório
+cd Cartesi-PKI
 ```
 
 ### Instale as dependências
