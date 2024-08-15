@@ -50,8 +50,16 @@ docker --version
 ```
 ### Instalar o Cartesi
 ```bash
-npm install -g @cartesi/cli
+sudo npm install -g @cartesi/cli
 ```
+
+### Caso precise atualizar o node para uma versão mais recente (22 neste caso)
+```bash
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.5/install.sh | bash
+source ~/.bashrc  # or source ~/.zshrc
+nvm install 22
+```
+
 
 ## Instalação
 
