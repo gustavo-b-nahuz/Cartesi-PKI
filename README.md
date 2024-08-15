@@ -48,6 +48,10 @@ Verifique a instalação
 ```bash
 docker --version
 ```
+Instalar suporte para Docker RISC-V
+```bash
+docker run --privileged --rm tonistiigi/binfmt:riscv
+```
 ### Instalar o Cartesi
 ```bash
 sudo npm install -g @cartesi/cli
