@@ -50,6 +50,9 @@ docker --version
 ```
 ### Para o funcionamento do Cartesi, é necessário instalar o suporte para Docker RISC-V
 ```bash
+sudo chmod 666 /var/run/docker.sock
+```
+```bash
 docker run --privileged --rm tonistiigi/binfmt:riscv
 ```
 ### Instalar o Cartesi
