@@ -48,7 +48,7 @@ Verifique a instalação
 ```bash
 docker --version
 ```
-Instalar suporte para Docker RISC-V
+### Para o funcionamento do Cartesi, é necessário instalar o suporte para Docker RISC-V
 ```bash
 docker run --privileged --rm tonistiigi/binfmt:riscv
 ```
@@ -90,10 +90,15 @@ cartesi build
 ## Uso
 
 ### Para iniciar o Cartesi:
+```bash
 cartesi run
+```
 
 ### Para enviar entradas genéricas para a aplicação (Em um novo terminal e mantendo o anterior aberto):
+```bash
 cartesi send generic
+```
+
 ### Teclar Enter até o momento de Input String
 
 ### A entrada deverá ser no seguinte formato:
