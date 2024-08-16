@@ -30,6 +30,8 @@ EOF
 ENV PATH="/opt/cartesi/bin:${PATH}"
 
 WORKDIR /opt/cartesi/dapp
+COPY ./public_key.pem .
+COPY ./signature.hex .
 COPY ./requirements.txt .
 
 RUN <<EOF

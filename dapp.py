@@ -31,7 +31,6 @@ def str2hex(str):
 def verify_signature(public_key_pem, message, signature):
     try:
         # Carregar a chave pública
-        public_key_pem = public_key_pem.replace("\\n", "\n").encode()
         public_key = RSA.import_key(public_key_pem)
 
         # Calcular o hash da mensagem
@@ -55,35 +54,39 @@ def handle_advance(data):
         dicionario = json.loads(input)
 
         # Atribui cada valor a uma variável
-        nome = dicionario["name"]
-        mensagem = dicionario["message"]
-        assinatura = bytes.fromhex(dicionario["signature"])
-        publicKey = dicionario["publicKey"]
+        id = dicionario["id"]
+        signature_file = dicionario["signature_file"]
+        public_key_file = dicionario["public_key_file"]
 
-        # Exibe os valores das variáveis
-        print("Nome:", nome)
-        print("Mensagem:", mensagem)
-        print("Assinatura:", assinatura)
-        print("Chave Pública:", publicKey)
+        # Ler a chave pública a partir do arquivo
+        with open(public_key_file, "rb") as f:
+            public_key_pem = f.read()
 
-        resultado = verify_signature(publicKey, mensagem, assinatura)
+        # Ler a assinatura a partir do arquivo
+        with open(signature_file, "r") as f:
+            signature = bytes.fromhex(f.read())
+
+        message = public_key_pem.decode()
+
+        resultado = verify_signature(public_key_pem, message, signature)
 
         if resultado:
-            print("\nA assinatura foi verificada com sucesso. O certificado é válido.")
+            logger.info(
+                "\nA assinatura foi verificada com sucesso. O certificado é válido."
+            )
+            # Emits notice with result of calculation
+            logger.info(f"Adding notice with payload from {id}")
+            response = requests.post(
+                rollup_server + "/notice", json={"payload": str2hex(dicionario)}
+            )
+            logger.info(
+                f"Received notice status {response.status_code} body {response.content}"
+            )
         else:
-            print("\nFalha na verificação. O certificado pode não ser válido.")
+            logger.info("\nFalha na verificação. O certificado pode não ser válido.")
         # Evaluates expression
         # parser = Parser()
         # output = parser.parse(input).evaluate({})
-
-        # Emits notice with result of calculation
-        # logger.info(f"Adding notice with payload: '{output}'")
-        response = requests.post(
-            rollup_server + "/notice", json={"payload": str2hex(str("Sucesso"))}
-        )
-        logger.info(
-            f"Received notice status {response.status_code} body {response.content}"
-        )
 
     except Exception as e:
         status = "reject"

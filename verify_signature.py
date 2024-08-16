@@ -8,7 +8,6 @@ from Crypto.PublicKey import RSA
 def verify_signature(public_key_pem, message, signature):
     try:
         # Carregar a chave pública
-        public_key_pem = public_key_pem.replace("\\n", "\n").encode()
         public_key = RSA.import_key(public_key_pem)
 
         # Calcular o hash da mensagem
@@ -21,13 +20,16 @@ def verify_signature(public_key_pem, message, signature):
         return False
 
 
-if len(sys.argv) != 4:
-    print("Uso: python script.py <public_key_pem> <message> <signature>")
-    sys.exit(1)
+# Ler a chave pública a partir do arquivo
+with open("public_key.pem", "rb") as f:
+    public_key_pem = f.read()
 
-public_key_pem = sys.argv[1]
-message = sys.argv[2]
-signature = bytes.fromhex(sys.argv[3])
+# Ler a assinatura a partir do arquivo
+with open("signature.hex", "r") as f:
+    signature = bytes.fromhex(f.read())
+
+# Usar a chave pública como a mensagem
+message = public_key_pem.decode()
 
 # Verificação
 if verify_signature(public_key_pem, message, signature):

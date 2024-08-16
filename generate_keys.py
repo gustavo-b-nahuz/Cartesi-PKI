@@ -17,7 +17,7 @@ with open("public_key.pem", "wb") as f:
 print("Chaves geradas e salvas em 'private_key.pem' e 'public_key.pem'.")
 
 # Assinar a mensagem e salvar a assinatura em hexadecimal
-message = b"Mensagem original"
+message = public_key
 h = SHA256.new(message)
 signature = pkcs1_15.new(key).sign(h)
 
