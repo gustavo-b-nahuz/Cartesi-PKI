@@ -39,7 +39,10 @@ set -e
 pip install --upgrade pip
 pip install -r requirements.txt --no-cache
 find /usr/local/lib -type d -name __pycache__ -exec rm -r {} +
+chown -R dapp:dapp /opt/cartesi/dapp
 EOF
+
+USER dapp
 
 COPY ./dapp.py .
 

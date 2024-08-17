@@ -13,6 +13,41 @@ logger = logging.getLogger(__name__)
 rollup_server = environ["ROLLUP_HTTP_SERVER_URL"]
 logger.info(f"HTTP rollup_server url is {rollup_server}")
 
+file_path = "data.json"
+
+
+def accessDataFile():
+    try:
+        with open(file_path, "r") as file:
+            data = json.load(file)
+    except FileNotFoundError:
+        print(f"Arquivo {file_path} não encontrado. Criando um novo arquivo.")
+        data = []
+    return data
+
+
+def includeNewData(data, new_entry):
+    already_exists = False
+    remove_entry = False
+    for entry in data:
+        if entry.get("id") == new_entry.get("id"):
+            if entry.get("publicKey") == new_entry.get("publicKey"):
+                remove_entry = True
+            already_exists = True
+    data = [entry for entry in data if entry.get("id") != new_entry.get("id")]
+    if not remove_entry:
+        data.append(new_entry)
+    return data, already_exists, remove_entry
+
+
+def modifyDataFile(data):
+    try:
+        with open(file_path, "w") as file:
+            json.dump(data, file, indent=4)
+            print(f"Arquivo {file_path} atualizado com o novo conteúdo.")
+    except IOError as e:
+        print(f"Erro ao salvar o arquivo: {e}")
+
 
 def hex2str(hex):
     """
@@ -55,29 +90,41 @@ def handle_advance(data):
 
         # Atribui cada valor a uma variável
         id = dicionario["id"]
-        signature_file = dicionario["signature_file"]
-        public_key_file = dicionario["public_key_file"]
+        publicKey = dicionario["publicKey"]
+        publicKey = publicKey.replace("\\n", "\n").encode()
+        signature = bytes.fromhex(dicionario["signature"])
+        message = publicKey.decode()
+
+        # signature_file = dicionario["signature_file"]
+        # public_key_file = dicionario["public_key_file"]
 
         # Ler a chave pública a partir do arquivo
-        with open(public_key_file, "rb") as f:
-            public_key_pem = f.read()
+        # with open(public_key_file, "rb") as f:
+        #     public_key_pem = f.read()
 
         # Ler a assinatura a partir do arquivo
-        with open(signature_file, "r") as f:
-            signature = bytes.fromhex(f.read())
+        # with open(signature_file, "r") as f:
+        #     signature = bytes.fromhex(f.read())
 
-        message = public_key_pem.decode()
-
-        resultado = verify_signature(public_key_pem, message, signature)
+        resultado = verify_signature(publicKey, message, signature)
 
         if resultado:
+            data = accessDataFile()
+            data, already_exists, remove_entry = includeNewData(data, dicionario)
+            modifyDataFile(data)
+            print("entrou", data)
             logger.info(
                 "\nA assinatura foi verificada com sucesso. O certificado é válido."
             )
             # Emits notice with result of calculation
-            logger.info(f"Adding notice with payload from {id}")
+            if remove_entry:
+                logger.info(f"Removing certificate from {id}")
+            elif already_exists:
+                logger.info(f"Replacing certificate from {id}")
+            else:
+                logger.info(f"Adding certificate from {id}")
             response = requests.post(
-                rollup_server + "/notice", json={"payload": str2hex(dicionario)}
+                rollup_server + "/notice", json={"payload": str2hex(str(data))}
             )
             logger.info(
                 f"Received notice status {response.status_code} body {response.content}"
