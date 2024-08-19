@@ -95,24 +95,14 @@ def handle_advance(data):
         signature = bytes.fromhex(dicionario["signature"])
         message = publicKey.decode()
 
-        # signature_file = dicionario["signature_file"]
-        # public_key_file = dicionario["public_key_file"]
-
-        # Ler a chave pública a partir do arquivo
-        # with open(public_key_file, "rb") as f:
-        #     public_key_pem = f.read()
-
-        # Ler a assinatura a partir do arquivo
-        # with open(signature_file, "r") as f:
-        #     signature = bytes.fromhex(f.read())
-
         resultado = verify_signature(publicKey, message, signature)
 
         if resultado:
-            data = accessDataFile()
-            data, already_exists, remove_entry = includeNewData(data, dicionario)
-            modifyDataFile(data)
-            print("entrou", data)
+            json_data = accessDataFile()
+            json_data, already_exists, remove_entry = includeNewData(
+                json_data, dicionario
+            )
+            modifyDataFile(json_data)
             logger.info(
                 "\nA assinatura foi verificada com sucesso. O certificado é válido."
             )
@@ -124,16 +114,13 @@ def handle_advance(data):
             else:
                 logger.info(f"Adding certificate from {id}")
             response = requests.post(
-                rollup_server + "/notice", json={"payload": str2hex(str(data))}
+                rollup_server + "/notice", json={"payload": str2hex(str(json_data))}
             )
             logger.info(
                 f"Received notice status {response.status_code} body {response.content}"
             )
         else:
             logger.info("\nFalha na verificação. O certificado pode não ser válido.")
-        # Evaluates expression
-        # parser = Parser()
-        # output = parser.parse(input).evaluate({})
 
     except Exception as e:
         status = "reject"
@@ -149,13 +136,27 @@ def handle_advance(data):
     return status
 
 
+def searchCert(data, id):
+    for item in data:
+        if item.get("id") == id:
+            return item
+    return None
+
+
 def handle_inspect(data):
     logger.info(f"Received inspect request data {data}")
-    logger.info("Adding report")
-    response = requests.post(
-        rollup_server + "/report", json={"payload": data["payload"]}
-    )
-    logger.info(f"Received report status {response.status_code}")
+    id = hex2str(data["payload"])
+    json_data = accessDataFile()
+    item = searchCert(json_data, id)
+    if item is not None:
+        logger.info(f"Certificado do {id} encontrado: {item}")
+    else:
+        logger.info("Certificado não encontrado")
+    # logger.info("Adding report")
+    # response = requests.post(
+    #     rollup_server + "/report", json={"payload": data["payload"]}
+    # )
+    # logger.info(f"Received report status {response.status_code}")
     return "accept"
 
 
