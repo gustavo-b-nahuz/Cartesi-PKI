@@ -1,4 +1,4 @@
-![image](https://github.com/user-attachments/assets/dee6c3c8-01d2-4dc6-923a-9f7d0a156c5b)# PKI descentralizada
+# PKI descentralizada
 
 O projeto consiste em um sistema distribuído, descentralizado, como alternativa à Infraestrutura de Chaves Públicas (PKI, ou Public Key Infrastructure) tradicional, baseada em Autoridades Certificadoras (AC) hierárquicas.
 Foi utilizado a implementação de sistemas Web3, mais especificamente a tecnologia Cartesi e blockchain baseada na Ethereum Virtual Machine (EVM).
