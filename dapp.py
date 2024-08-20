@@ -120,7 +120,7 @@ def handle_advance(data):
                 f"Received notice status {response.status_code} body {response.content}"
             )
         else:
-            logger.info("\nFalha na verificação. O certificado pode não ser válido.")
+            logger.info("\nFalha na verificação. A assinatura não é válida.")
 
     except Exception as e:
         status = "reject"
@@ -149,14 +149,10 @@ def handle_inspect(data):
     json_data = accessDataFile()
     item = searchCert(json_data, id)
     if item is not None:
-        logger.info(f"Certificado do {id} encontrado: {item}")
+        logger.info(f"Certificado do {id} encontrado:\n{item['publicKey']}")
     else:
         logger.info("Certificado não encontrado")
-    # logger.info("Adding report")
-    # response = requests.post(
-    #     rollup_server + "/report", json={"payload": data["payload"]}
-    # )
-    # logger.info(f"Received report status {response.status_code}")
+
     return "accept"
 
 
