@@ -92,17 +92,19 @@ cartesi build
 
 ## Uso
 
-### Para iniciar o Cartesi:
+### Para iniciar o Cartesi (Manter este terminal aberto e utilizar outro para os próximos passos):
 ```bash
 cartesi run
 ```
 
-### Para enviar entradas genéricas para a aplicação (Em um novo terminal e mantendo o anterior aberto):
+### Para utilizar o Advance no Cartesi:
+
+#### Comando para enviar entradas genéricas para a aplicação (Em um novo terminal):
 ```bash
 cartesi send generic
 ```
 
-### Teclar Enter até o momento de Input String
+#### Teclar Enter até o momento de Input String
 ```bash
 > cartesi send generic
 ? Chain Foundry
@@ -114,16 +116,22 @@ cartesi send generic
 ? Input String encoding
 ```
 
-### A entrada deverá ser uma string no formato json com da seguinte forma:
+#### A entrada deverá ser uma string no formato json com da seguinte forma:
 ```
 {"id":"<identificador de quem esta enviado o certificado>","publicKey":"<certificado contendo chave publica>,"signature":"<mensagem assinada pela chave privada>"}
 ```
 A partir da entrada, o sistema verifica se o certificado com chave pública percente ao identificador a partir da assinatura, ou seja, se foi gerado a partir da mesma chave privada que assinou a mensagem.
 
-### Ações que podem ser realizadas a partir da entrada:
+#### Ações que podem ser realizadas a partir da entrada:
 - *registrar uma nova chave pública por um usuário, com mensagem assinada*;
   - Caso o usuário não possua nenhuma chave pública registrada e a mesma tenha sido validada pela assinatura, a chave pública é registrada.
 - *alterar a chave pública e mensagem assinada registrada por um usuário*;
   - Caso o usuário possua uma chave pública registrada e envie uma nova, que tenha sido validada pela assinatura, a chave pública é alterada.
 - *Revogar uma chave pública registrada pelo usuário*.
   - Caso o usuário envie a mesma chave pública que está registrada atualmente, validada pela assinatura, a chave pública é revogada.
+ 
+### Para verificar o estados da Blockchain:
+É mostrado um array de estados, onde o último mostrado é o atual.
+
+### Para utilizar o Inspect no Cartesi:
+
