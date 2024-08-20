@@ -149,5 +149,16 @@ python3 inspect_query.py <id>
 O <id> deve ser substituído pelo identificador que foi registrado na blockchain e que deseja ter se certificado consultado.
 
 ### Testes realizados
+*Advance (se encontram no arquivo inputs.txt):*
+- Tentar incluir o certificado de um usuário que não possui a assinatura correta;
+- Inclusão de novos certificados;
+- Alteração de certificado;
+- Revogação de certificado.
+Obs.: Para cada teste foi realizada a verificação de estados da blockchain.
+
+*Inspect:*
+- Consultar o certificado de um ID que possui certificado registrado;
+- Consultar o certificado de um ID que NÃO possui certificado registrado;
 
 ### Link do vídeo contendo a execução dos testes
+https://drive.google.com/uc?id=1vNIPNi89zD5sxenSLjwG7cV7KJ3yuHc6&export=download
