@@ -15,7 +15,7 @@ logger.info(f"HTTP rollup_server url is {rollup_server}")
 
 file_path = "data.json"
 
-
+# Acessa o arquivo JSON (banco de dados local) e retorna um array com seus dados (ou em branco caso não exista o arquivo)
 def accessDataFile():
     try:
         with open(file_path, "r") as file:
@@ -25,7 +25,7 @@ def accessDataFile():
         data = []
     return data
 
-
+# Atualiza o array
 def updateData(data, new_entry):
     already_exists = False
     remove_entry = False
@@ -45,7 +45,7 @@ def updateData(data, new_entry):
         data.append(new_entry)
     return data, already_exists, remove_entry
 
-
+# Modifica o arquivo JSON com o array atualizado 
 def modifyDataFile(data):
     try:
         with open(file_path, "w") as file:
@@ -68,7 +68,7 @@ def str2hex(str):
     """
     return "0x" + str.encode("utf-8").hex()
 
-
+# Verifica se a mensagem foi assinada pela mesma chave privada que gerou a chave publica
 def verify_signature(public_key_pem, message, signature):
     try:
         # Carregar a chave pública
@@ -99,13 +99,20 @@ def handle_advance(data):
         publicKey = dicionario["publicKey"]
         publicKey = publicKey.replace("\\n", "\n").encode()
         signature = bytes.fromhex(dicionario["signature"])
+        # A mensagem utilizada para gerar a assinatura foi o proprio certificado com chave publica
         message = publicKey.decode()
 
         resultado = verify_signature(publicKey, message, signature)
 
+        # Se a assinatura e valida
         if resultado:
+            # O json (BD) e acessado e um array com as informacoes criado
             json_data = accessDataFile()
+            
+            # O array e atualizado com as informacoes atuais
             json_data, already_exists, remove_entry = updateData(json_data, dicionario)
+            
+            # O arquivo json e modificado com as novas informacoes
             modifyDataFile(json_data)
             logger.info(
                 "\nA assinatura foi verificada com sucesso. O certificado é válido."
@@ -139,7 +146,7 @@ def handle_advance(data):
 
     return status
 
-
+# Busca no array as informacoes do id
 def searchCert(data, id):
     for item in data:
         if item.get("id") == id:
@@ -149,8 +156,14 @@ def searchCert(data, id):
 
 def handle_inspect(data):
     logger.info(f"Received inspect request data {data}")
+    
+    # Recebe da solicitacao de inspect o id a ser buscado
     id = hex2str(data["payload"])
+
+    # O json (BD) e acessado e um array com as informacoes criado
     json_data = accessDataFile()
+
+    # Busca no array o id solicitado no inspect
     item = searchCert(json_data, id)
     if item is not None:
         logger.info(f"Certificado do {id} encontrado:\n{item['publicKey']}")
