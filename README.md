@@ -131,7 +131,21 @@ A partir da entrada, o sistema verifica se o certificado com chave pública perc
   - Caso o usuário envie a mesma chave pública que está registrada atualmente, validada pela assinatura, a chave pública é revogada.
  
 ### Para verificar o estados da Blockchain:
-É mostrado um array de estados, onde o último mostrado é o atual.
+```bash
+python3 fetch_state.py
+```
+É mostrado um array de estados, onde o último mostrado é o estado atual na blockchain.
+
+### Para gerar exemplos de certificados com chave pública e assinaturas:
+```bash
+python3 generate_keys.py
+```
+O certificado é gerado em um arquivo 
 
 ### Para utilizar o Inspect no Cartesi:
+```bash
+python3 inspect_query.py <id>
+```
+O <id> deve ser substituído pelo identificador que foi registrado na blockchain e que deseja ter se certificado consultado.
+
 
