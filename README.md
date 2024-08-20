@@ -143,6 +143,8 @@ python3 generate_keys.py
 ```
 São gerados os arquivo public_key.pem, private_key.pem e signature.hex que contém a chave pública, a chave privada e mensagem assinada (ou assinatura), respectivamente. Para os testes de Advance são utilizados apenas o conteúdo da public_key.pem (certificado que contém a chave pública) e signature.hex (mensagem assinada).
 
+Obs: Caso for utilizar a chave pública gerada no arquivo public_key.pem, remova as quebras de linha e adicione "\n" no lugar antes de colar esse conteúdo na string que será entrada para a operação de Advance.
+
 ### Para utilizar o Inspect no Cartesi
 ```bash
 python3 inspect_query.py <id>
