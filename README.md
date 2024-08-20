@@ -85,21 +85,21 @@ cd Cartesi-PKI
 npm install # ou o comando correspondente para sua tecnologia
 ```
 
-### Com o Docker em execução, faça o build do Cartesi:
+### Com o Docker em execução, faça o build do Cartesi
 ```bash
 cartesi build
 ```
 
 ## Uso
 
-### Para iniciar o Cartesi (Manter este terminal aberto e utilizar outro para os próximos passos):
+### Para iniciar o Cartesi (Manter este terminal aberto e utilizar outro para os próximos passos)
 ```bash
 cartesi run
 ```
 
-### Para utilizar o Advance no Cartesi:
+### Para utilizar o Advance no Cartesi
 
-#### Comando para enviar entradas genéricas para a aplicação (Em um novo terminal):
+#### Comando para enviar entradas genéricas para a aplicação (Em um novo terminal)
 ```bash
 cartesi send generic
 ```
@@ -116,13 +116,13 @@ cartesi send generic
 ? Input String encoding
 ```
 
-#### A entrada deverá ser uma string no formato json com da seguinte forma:
+#### A entrada deverá ser uma string no formato json com a seguinte forma
 ```
 {"id":"<identificador de quem esta enviado o certificado>","publicKey":"<certificado contendo chave publica>,"signature":"<mensagem assinada pela chave privada>"}
 ```
 A partir da entrada, o sistema verifica se o certificado com chave pública percente ao identificador a partir da assinatura, ou seja, se foi gerado a partir da mesma chave privada que assinou a mensagem.
 
-#### Ações que podem ser realizadas a partir da entrada:
+#### Ações que podem ser realizadas a partir da entrada
 - *registrar uma nova chave pública por um usuário, com mensagem assinada*;
   - Caso o usuário não possua nenhuma chave pública registrada e a mesma tenha sido validada pela assinatura, a chave pública é registrada.
 - *alterar a chave pública e mensagem assinada registrada por um usuário*;
@@ -130,19 +130,19 @@ A partir da entrada, o sistema verifica se o certificado com chave pública perc
 - *Revogar uma chave pública registrada pelo usuário*.
   - Caso o usuário envie a mesma chave pública que está registrada atualmente, validada pela assinatura, a chave pública é revogada.
  
-### Para verificar o estados da Blockchain:
+### Para verificar o estados da Blockchain
 ```bash
 python3 fetch_state.py
 ```
 É mostrado um array de estados, onde o último mostrado é o estado atual na blockchain.
 
-### Para gerar exemplos de certificados com chave pública e assinaturas:
+### Para gerar exemplos de certificados com chave pública e assinaturas
 ```bash
 python3 generate_keys.py
 ```
 São gerados os arquivo public_key.pem, private_key.pem e signature.hex que contém a chave pública, a chave privada e mensagem assinada (ou assinatura), respectivamente. Para os testes de Advance são utilizados apenas o conteúdo da public_key.pem (certificado que contém a chave pública) e signature.hex (mensagem assinada).
 
-### Para utilizar o Inspect no Cartesi:
+### Para utilizar o Inspect no Cartesi
 ```bash
 python3 inspect_query.py <id>
 ```
@@ -160,5 +160,5 @@ Obs.: Para cada teste foi realizada a verificação de estados da blockchain.
 - Consultar o certificado de um ID que possui certificado registrado;
 - Consultar o certificado de um ID que NÃO possui certificado registrado;
 
-### Link do vídeo contendo a execução dos testes
+### Link para download do vídeo contendo a execução dos testes
 https://drive.google.com/uc?id=1vNIPNi89zD5sxenSLjwG7cV7KJ3yuHc6&export=download
