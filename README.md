@@ -140,7 +140,7 @@ python3 fetch_state.py
 ```bash
 python3 generate_keys.py
 ```
-O certificado é gerado em um arquivo 
+São gerados os arquivo public_key.pem, private_key.pem e signature.hex que contém a chave pública, a chave privada e mensagem assinada (ou assinatura), respectivamente. Para os testes de Advance são utilizados apenas o conteúdo da public_key.pem (certificado que contém a chave pública) e signature.hex (mensagem assinada).
 
 ### Para utilizar o Inspect no Cartesi:
 ```bash
@@ -148,4 +148,6 @@ python3 inspect_query.py <id>
 ```
 O <id> deve ser substituído pelo identificador que foi registrado na blockchain e que deseja ter se certificado consultado.
 
+### Testes realizados
 
+### Link do vídeo contendo a execução dos testes
