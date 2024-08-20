@@ -168,6 +168,7 @@ https://drive.google.com/uc?id=1vNIPNi89zD5sxenSLjwG7cV7KJ3yuHc6&export=download
 
 ### Deadline Exceeded Error
 Testamos o código em alguns computadores e dois deles (que utilizavam VM ou WSL) obtiveram este erro ao executar o Cartesi run. Entramos em contato direto com o suporte da Cartesi (via reunião virtual no meet) e não souberam como ajudar, até comentaram sobre a possibilidade de um bug. Outras pessoas também tiveram o mesmo erro.
+
 Achamos interessante deixar esta situação registrada e documentada, pois caso aconteça, a única opção é testar em outra máquina, de preferência uma que utilize o Linux como Sistema Operacional, visto que nem o suporte da Cartesi conseguiu resolver.
 
 ```
