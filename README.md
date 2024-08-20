@@ -165,3 +165,11 @@ Obs.: Para cada teste foi realizada a verificação de estados da blockchain.
 
 ### Link para download do vídeo contendo a execução dos testes
 https://drive.google.com/uc?id=1vNIPNi89zD5sxenSLjwG7cV7KJ3yuHc6&export=download
+
+### Deadline Exceeded Error
+Testamos o código em alguns computadores e dois deles (que utilizavam VM ou WSL) obtiveram este erro ao executar o Cartesi run. Entramos em contato direto com o suporte da Cartesi (via reunião virtual no meet) e não souberam como ajudar, até comentaram sobre a possibilidade de um bug. Outras pessoas também tiveram o mesmo erro.
+Achamos interessante deixar esta situação registrada e documentada, pois caso aconteça, a única opção é testar em outra máquina, de preferência uma que utilize o Linux como Sistema Operacional, visto que nem o suporte da Cartesi conseguiu resolver.
+
+```
+validator-1  | 2024-08-16 21:19:20.962067 error server-manager pid:41 request-id:694dc88c-508d-4833-aa75-163f89f91d89 Caught finish_error_yield_none Deadline Exceeded
+```
