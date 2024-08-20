@@ -9,6 +9,7 @@ Foi utilizado a implementação de sistemas Web3, mais especificamente a tecnolo
 - [Configuração do ambiente](#configuracao-ambiente)
 - [Instalação](#instalação)
 - [Uso](#uso)
+- [Testes](#testes)
 
 ## Tecnologias Utilizadas
 
@@ -148,7 +149,7 @@ python3 inspect_query.py <id>
 ```
 O <id> deve ser substituído pelo identificador que foi registrado na blockchain e que deseja ter se certificado consultado.
 
-### Testes realizados
+## Testes realizados
 *Advance (se encontram no arquivo inputs.txt):*
 - Tentar incluir o certificado de um usuário que não possui a assinatura correta;
 - Inclusão de novos certificados;
