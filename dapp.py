@@ -26,15 +26,21 @@ def accessDataFile():
     return data
 
 
-def includeNewData(data, new_entry):
+def updateData(data, new_entry):
     already_exists = False
     remove_entry = False
+    # Itera sobre os certificados existentes
     for entry in data:
+        # Caso o ID do inserido já existia, marca a flag already_exists como true
         if entry.get("id") == new_entry.get("id"):
+            # Caso o certificado seja igual, quer dizer que devemos removê-lo, então marca remove_entry como true
+            # Se não for igual, iremos apenas alterá-lo
             if entry.get("publicKey") == new_entry.get("publicKey"):
                 remove_entry = True
             already_exists = True
+    # Remove um certificado antigo caso tenha o mesmo ID do novo
     data = [entry for entry in data if entry.get("id") != new_entry.get("id")]
+    # Só inclui o novo se o ID não existia antes
     if not remove_entry:
         data.append(new_entry)
     return data, already_exists, remove_entry
@@ -99,9 +105,7 @@ def handle_advance(data):
 
         if resultado:
             json_data = accessDataFile()
-            json_data, already_exists, remove_entry = includeNewData(
-                json_data, dicionario
-            )
+            json_data, already_exists, remove_entry = updateData(json_data, dicionario)
             modifyDataFile(json_data)
             logger.info(
                 "\nA assinatura foi verificada com sucesso. O certificado é válido."
